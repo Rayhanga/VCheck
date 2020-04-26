@@ -18,7 +18,7 @@ virtualenv venv &&
 pip install -r requirements.txt
 ```
 
-Install `Selenium Webdriver` please refer to their documentation [Here](https://selenium-python.readthedocs.io/installation.html#drivers).
+Install `Selenium Webdriver (Firefox)` please refer to their documentation [Here](https://selenium-python.readthedocs.io/installation.html#drivers).
 
 ## Usage
 
