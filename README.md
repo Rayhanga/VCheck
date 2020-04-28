@@ -12,21 +12,49 @@ pip install virtualenv
 
 Create new `virtualenv` and install depedencies:
 
-```bash
-virtualenv venv &&
-. venv/bin/activate && 
-pip install -r requirements.txt
-```
+- Windows:
 
-Install `Selenium Webdriver (Firefox)` please refer to their documentation [Here](https://selenium-python.readthedocs.io/installation.html#drivers).
+    ```
+    virtualenv venv
+    venv\Scripts\activate &&
+    pip install -r requirements.txt
+    ```
+
+- Linux / MacOS:
+
+    ```bash
+    virtualenv venv &&
+    . venv/bin/activate && 
+    pip install -r requirements.txt
+    ```
+
+Install `geckodriver`
+
+- Windows:
+
+  - Download latest `geckodriver.exe` from [here](https://github.com/mozilla/geckodriver/releases/).
+  - Unzip and move / copy `geckodriver.exe` into your `venv\Scripts\` folder.
+
+- Linux / MacOS:
+
+  - Download latest `geckodriver` from [here](https://github.com/mozilla/geckodriver/releases/).
+  - Untar and move / copy `geckodriver` into your `/usr/bin` or any other directory inside `PATH`.
 
 ## Usage
 
 Always use `virtualenv` when interacting with these modules
 
-```bash
-. venv/bin/activate
-```
+- Windows:
+
+  ```
+  venv\Scripts\activate
+  ```
+
+- Linux / MacOS:
+
+  ```bash
+  . venv/bin/activate
+  ```
 
 ### Run on terminal
 
