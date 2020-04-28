@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from bs4 import BeautifulSoup as bs
 
 def filterCourseName(course_name):
@@ -85,17 +85,23 @@ def getUpcomingTask(page_source):
     data = []
 
     for task in taskList:
-        now = datetime.now()
+        now = datetime.datetime.now()
         taskInfo = task.findAll('a')
         today = now.strftime('%A, %d %B')
+        tomorrow = (now + datetime.timedelta(days=1)).strftime('%A, %d %B')
         year = filterCourseName(taskInfo[-2].text)[1]
+        title = task.find('h3', {'class': 'name d-inline-block'}).text
 
         taskMatkul = filterCourseName(taskInfo[-2].text)[0]
 
-        taskDeadline = taskInfo[0].parent.text.replace('Today', today) + ', ' + year
-        taskDeadline = datetime.strptime(taskDeadline, '%A, %d %B, %I:%M %p, %Y')
+        taskDeadline = taskInfo[0].parent.text.replace('Today', today).replace('Tomorrow', tomorrow) + ', ' + year
+        taskDeadline = datetime.datetime.strptime(taskDeadline, '%A, %d %B, %I:%M %p, %Y')
 
         taskUrl = taskInfo[-1].attrs.get('href')
+
+        taskDesc = task.find('div', {'class': 'description-content'})
+        if taskDesc:
+            taskDesc = taskDesc.find('div')
 
         if 'quiz' in taskUrl:
             taskType = 'Quiz'
@@ -106,12 +112,13 @@ def getUpcomingTask(page_source):
         else:
             taskType = None
 
-        data.append({
-            'taskMatkul': taskMatkul,
-            'taskDeadline': taskDeadline.strftime('%d-%m-%Y %H:%M:%S'),
-            'taskUrl': taskUrl,
-            'taskType': taskType
-        })
+        if 'closes' in title or 'due' in title or 'should be completed' in title:
+            data.append({
+                'taskMatkul': taskMatkul,
+                'taskDeadline': taskDeadline.strftime('%d-%m-%Y %H:%M:%S'),
+                'taskUrl': taskUrl,
+                'taskType': taskType
+            })
 
     return data
 
