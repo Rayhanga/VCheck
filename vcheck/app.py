@@ -13,7 +13,7 @@ def run():
             print('Login Failed')
 
     print('Upcoming Tasks')
-    for task in module.getUpcomingTask():
+    for task in module.getUpcomingTasks():
         print(json.dumps(task, indent=2))
 
     print('Course Status')
